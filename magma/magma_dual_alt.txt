@@ -16,6 +16,7 @@ print "Degree of X:", Degree(X);
 // 3. Verify Singularities
 Sing := SingularSubscheme(X);
 print "Dimension of Singular Locus:", Dimension(Sing);
+print "Degree of Singular Locus:", Degree(Sing);
 
 // 4. Define the Gauss Map
 // The dual variety is the closure of the image of the Gauss map.
