@@ -1,0 +1,46 @@
+// 1. Setup
+// We use a large finite field for efficiency. 
+// If you strictly need the result over Q, change GF(32003) to Rationals(), 
+// but be warned: the Groebner basis calculation may hang or consume all RAM.
+K := GF(32003); 
+P<x1,x2,x3,y1,y2,y3> := ProjectiveSpace(K, 5);
+
+// 2. Define the Cubic Fourfold
+F := x1*y1^2 + x2*y2^2 + x3*y3^2 + x1*x2*y3;
+X := Scheme(P, F);
+
+print "--- Variety Properties ---";
+print "Dimension of X:", Dimension(X);
+print "Degree of X:", Degree(X);
+
+// 3. Verify Singularities
+// We expect a 1-dimensional singular locus (lines), which reduces the dual degree.
+Sing := SingularSubscheme(X);
+print "Dimension of Singular Locus:", Dimension(Sing);
+
+// 4. Define the Gauss Map
+// The dual variety is the closure of the image of the Gauss map.
+// The map sends a point p to the gradient [dF/dx1(p) : ... : dF/dy3(p)].
+Grad := [Derivative(F, P.i) : i in [1..6]];
+
+// Define the rational map from X to the Dual Projective Space
+phi := map<X -> P | Grad>;
+
+// 5. Compute the Dual Variety
+// 'Image' computes the closure of the image of the map.
+print "--- Computing Dual Variety (this may take time) ---";
+DualX := Image(phi);
+
+print "--- Dual Variety Results ---";
+print "Dimension of Dual:", Dimension(DualX);
+print "Degree of Dual:", Degree(DualX);
+
+// 6. Equation Handling
+// If the degree is lower than 48, we might be able to see the equation,
+// but usually, it is too massive to print (thousands of terms).
+if Degree(DualX) lt 20 then
+    print "Equation of Dual Variety:";
+    print DefiningPolynomial(DualX);
+else
+    print "Equation is likely too large to display (Degree > 20).";
+end if;

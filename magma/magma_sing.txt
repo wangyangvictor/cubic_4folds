@@ -1,0 +1,32 @@
+// 1. Define the Finite Field and Projective Space
+p := 7; // Example prime
+K := GF(p);
+P5<x0, x1, x2, x3, x4, x5> := ProjectiveSpace(K, 5);
+
+// 2. Define your cubic hypersurface equation F
+// Replace this with your specific polynomial
+F := x0^3 + x1^2*x2 + x3*x4*x5; 
+
+// 3. Create the Scheme X
+X := Scheme(P5, F);
+
+// 4. Compute the Singular Locus
+// This returns the subscheme defined by the Jacobian Ideal
+SingX := SingularSubscheme(X);
+
+// 5. Analysis of the Singular Locus
+printf "Dimension of the singular locus: %o\n", Dimension(SingX);
+printf "Degree of the singular locus: %o\n", Degree(SingX);
+
+// If you want to see the defining equations of the singular locus:
+Equations(SingX);
+
+// 6. Decomposition into irreducible components
+// This is useful to verify if it is indeed a conic or a union of planes
+Components := IrreducibleComponents(SingX);
+print "Number of irreducible components:", #Components;
+
+for i in [1..#Components] do
+    C := Components[i];
+    printf "Component %o: Dimension %o, Degree %o\n", i, Dimension(C), Degree(C);
+end for;
