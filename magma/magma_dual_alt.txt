@@ -14,7 +14,6 @@ print "Dimension of X:", Dimension(X);
 print "Degree of X:", Degree(X);
 
 // 3. Verify Singularities
-// We expect a 1-dimensional singular locus (lines), which reduces the dual degree.
 Sing := SingularSubscheme(X);
 print "Dimension of Singular Locus:", Dimension(Sing);
 
