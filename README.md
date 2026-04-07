@@ -12,4 +12,4 @@ As a bonus, it might be good to know (4) the set of planes contained in X,
 and (5) how to interpret point-counting on X(Q) in terms of the Manin--Peyre conjecture, if possible,
 or (6) in terms of more general conjectures of Batyrev--Tschinkel, Lehmann--Sengupta--Tanimoto, et al.
 
-It is possible that a mixture of human expertise, classical coding, and AI/Lean assistance could be useful for many of the tasks listed above.
+It is plausible that a mixture of human expertise, classical coding, and AI/Lean assistance could be useful for many of the tasks listed above.
