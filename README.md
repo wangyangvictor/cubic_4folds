@@ -7,7 +7,8 @@ The data for k = 2, 3, and 4 is available [here](https://github.com/wangyangvict
 For any given X, the data can be checked on [Magma](https://magma.maths.usyd.edu.au/calc/), for example using the script [here](https://github.com/wangyangvictor/cubic_4folds/blob/main/magma/magma_dual_alt.txt).
 
 It would be interesting to compute further information about these varieties X, such as (1) whether their generic hyperplane sections satisfy "better than square-root cancellation" as in the work of Browning--Munshi--Wang, or (2) if not, what kind of Hasse--Weil L-functions arise, in the simplest possible form.
-Moreover, one might want to know (3) the identity component of the automorphism group of X.
+Moreover, one might want to know (3) the identity component of the automorphism group of X;
+the dimension of Aut(X) can be computed using the Magma script [here](https://github.com/wangyangvictor/cubic_4folds/blob/main/magma/aut_gemini.txt).
 As a bonus, it might be good to know (4) the set of planes contained in X,
 and (5) how to interpret point-counting on X(Q) in terms of the Manin--Peyre conjecture, if possible,
 or (6) in terms of more general conjectures of Batyrev--Tschinkel, Lehmann--Sengupta--Tanimoto, et al.
