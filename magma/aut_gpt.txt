@@ -1,0 +1,62 @@
+function Degree3Monomials(P)
+    x := [ P.i : i in [1..6] ];
+    mons := [];
+
+    for e1 in [0..3] do
+    for e2 in [0..3-e1] do
+    for e3 in [0..3-e1-e2] do
+    for e4 in [0..3-e1-e2-e3] do
+    for e5 in [0..3-e1-e2-e3-e4] do
+        e6 := 3 - e1 - e2 - e3 - e4 - e5;
+        Append(~mons, x[1]^e1 * x[2]^e2 * x[3]^e3 * x[4]^e4 * x[5]^e5 * x[6]^e6);
+    end for;
+    end for;
+    end for;
+    end for;
+    end for;
+
+    return mons;
+end function;
+
+function DimAutCubicFourfold(f)
+    P := Parent(f);
+    K := BaseRing(P);
+
+    if Ngens(P) ne 6 then
+        error "Need a polynomial ring in 6 variables.";
+    end if;
+    if TotalDegree(f) ne 3 then
+        error "Need a cubic polynomial.";
+    end if;
+    if Characteristic(K) eq 3 then
+        error "Assume char(K) <> 3.";
+    end if;
+
+    x := [ P.i : i in [1..6] ];
+    mons := Degree3Monomials(P);
+
+    rows := [];
+    for m in mons do
+        row := [];
+        for i in [1..6] do
+            dfi := Derivative(f, i);
+            for j in [1..6] do
+                Append(~row, MonomialCoefficient(x[j] * dfi, m));
+            end for;
+        end for;
+        Append(~row, -MonomialCoefficient(f, m));
+        Append(~rows, row);
+    end for;
+
+    M := Matrix(K, rows);
+
+    // Magma's Nullspace solves v*A = 0, so transpose first.
+    N := Nullspace(Transpose(M));
+
+    // quotient by scalars to pass from GL(6) to PGL(6)
+    return Dimension(N) - 1;
+end function;
+
+P<x1,x2,x3,y1,y2,y3> := PolynomialRing(Rationals(), 6);
+f := x1*y1^2 + x2*y2^2 + x3*y3^2 - 4*x1*x2*x3 - y1*y2*y3;
+DimAutCubicFourfold(f);
