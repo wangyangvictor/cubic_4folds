@@ -38,9 +38,5 @@ print "Degree of Dual:", Degree(DualX);
 // 6. Equation Handling
 // If the degree is lower than 48, we might be able to see the equation,
 // but usually, it is too massive to print (thousands of terms).
-if Degree(DualX) lt 20 then
-    print "Equation of Dual Variety:";
-    print DefiningPolynomial(DualX);
-else
-    print "Equation is likely too large to display (Degree > 20).";
-end if;
+print "Dual Variety:";
+print DualX
