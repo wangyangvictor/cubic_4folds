@@ -39,4 +39,4 @@ print "Degree of Dual:", Degree(DualX);
 // If the degree is lower than 48, we might be able to see the equation,
 // but usually, it is too massive to print (thousands of terms).
 print "Dual Variety:";
-print DualX
+print DualX;
