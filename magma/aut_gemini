@@ -1,0 +1,44 @@
+// Define the base field and the ambient polynomial ring
+K := Rationals(); // You can change this to a finite field or algebraic closure if needed
+P<x1,x2,x3,y1,y2,y3> := PolynomialRing(K, 6);
+
+// Define your cubic 4-fold f
+f := x1*y1^2 + x2*y2^2 + x3*y3^2 - 4*x1*x2*x3 - y1*y2*y3;
+
+// Compute the partial derivatives of f
+derivs := [ Derivative(f, i) : i in [1..6] ];
+
+// We want to find all matrices B_{ij} such that:
+// \sum_{i,j} B_{ij} * x_j * (\partial f / \partial x_i) == 0
+// This is a linear system where the unknowns are the 36 entries of B.
+
+// Get a basis for all monomials of degree 3 in 6 variables
+monoms := SetToSequence(MonomialsOfDegree(P, 3));
+num_monoms := #monoms;
+
+// Setup the coefficient matrix M. 
+// Rows correspond to the 36 variables B_{ij}.
+// Columns correspond to the monomials of degree 3.
+M := ZeroMatrix(K, 36, num_monoms);
+
+for i in [1..6] do
+    for j in [1..6] do
+        // The linear index for the row corresponding to B_{ij}
+        row_idx := (i - 1) * 6 + j;
+        
+        // The polynomial multiplied by B_{ij}
+        poly_ij := P.j * derivs[i];
+        
+        // Extract the coefficients of poly_ij and put them in the matrix
+        for k in [1..num_monoms] do
+            M[row_idx, k] := MonomialCoefficient(poly_ij, monoms[k]);
+        end for;
+    end for;
+end for;
+
+// In Magma, Nullspace(M) computes the left nullspace (v * M = 0).
+// The dimension of this nullspace is the dimension of Lie(Aut(X)).
+dim_Aut := Dimension(Nullspace(M));
+
+print "Defining Cubic Form:", f;
+print "Dimension of Aut(X) is:", dim_Aut;
